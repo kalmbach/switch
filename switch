@@ -1,13 +1,19 @@
 #!/bin/bash
 
-# Chek if current path is a git repo
+# chek if current path is a git repo
 git rev-parse --is-inside-work-tree 1> /dev/null 2>&1
 if [ $? -ne 0 ]; then
   echo "There is no git repository in the current path."
   exit
 fi
 
-# Check if a branch name was given, otherwise ask for one
+# check if gum is present
+if ! command -v gum &> /dev/null; then
+  echo "This script requires gum (https://github.com/charmbracelet/gum)"
+  exit
+fi
+
+# check if a branch name was given, otherwise ask for one
 if [ -z "$1" ]; then
   current=$(git rev-parse --abbrev-ref HEAD)
   options=$(git branch --format="%(refname:short)") 
