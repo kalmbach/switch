@@ -8,6 +8,7 @@ Switch git branches with style.
 
 ## install
 This will install `switch` in the `~/.local/bin` folder.
+
 You can change the destination path passing `-o custom_path` to the command below.
 ```
 curl -fsSL https://raw.githubusercontent.com/kalmbach/switch/refs/heads/main/install.sh | bash -s --
