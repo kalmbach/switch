@@ -1,0 +1,19 @@
+#!/bin/bash
+
+_switch_completion() {
+  local cur prev branches
+  COMPREPLY=()
+
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  
+  if [ "$prev" == "switch" ]; then
+    branches=$(git branch --format="%(refname:short)" \
+      | grep -v "$(git rev-parse --abbrev-ref HEAD)" \
+      | tr '\n' ' ')
+
+    COMPREPLY=( $(compgen -W "$branches" "$cur") )
+  fi
+}
+
+complete -F _switch_completion switch
