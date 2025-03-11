@@ -7,6 +7,19 @@ if [ $? -ne 0 ]; then
   exit
 fi
 
+_switch_completion() {
+  local cur prev
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
+  
+  if [ "$prev" == "switch" ]; then
+    COMPREPLY=( $(git branch --format="%(refname:short)" | grep -v "\*" | grep -v " $(git rev-parse --abbrev-ref HEAD)") )
+  fi
+}
+
+complete -C _switch_completion switch
+
 # check if gum is present
 if ! command -v gum &> /dev/null; then
   echo "This script requires gum (https://github.com/charmbracelet/gum)"
